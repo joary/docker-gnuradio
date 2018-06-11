@@ -1,1 +1,2 @@
-docker build -t basic_gnuradio .
+source ./config
+docker build -t $IMAGENAME . 
