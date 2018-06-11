@@ -1,5 +1,5 @@
 FROM base/archlinux
-MAINTAINER Joary Paulo
+MAINTAINER Hetti
 
 # Update Pacman
 RUN pacman -Syu --noconfirm
@@ -78,10 +78,22 @@ RUN pacman -S --noconfirm python-dbus-common \
   python2-requests \
   python2-sip && pacman -Scc --noconfirm
 
-RUN pacman --noconfirm -S gnuradio \
+RUN pacman -S --noconfirm gnuradio \
 	gnuradio-companion \
 	gnuradio-osmosdr \
 	&& pacman -Scc --noconfirm
 
+# Install dependencies for SrsLTE
+RUN pacman -S --noconfirm boost \
+ gcc \
+ make \
+ cmake \
+ mbedtls \
+ pcsclite \
+ libconfig \
+ pkg-config \
+ lksctp-tools \
+ check
+ 
 # Enables the graphical interface of gnuradio-companion inside the container
 ENV DISPLAY unix:0
