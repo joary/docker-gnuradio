@@ -1,0 +1,2 @@
+IMAGENAME="basic_gnuradio"
+VOLUMES="-v $PWD/home:/home"
