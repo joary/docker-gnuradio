@@ -1,10 +1,10 @@
 FROM base/archlinux
 MAINTAINER Joary Paulo
 
-# Update Pacman
-RUN pacman -Syu --noconfirm
+# Update keyring and Pacman
+RUN pacman -Sy archlinux-keyring --noconfirm && pacman -Syyu --noconfirm
 
-RUN pacman -S --noconfirm \
+RUN pacman -S --needed --noconfirm \
   alsa-lib \
   blas \
   cblas \
@@ -25,7 +25,6 @@ RUN pacman -S --noconfirm \
   mesa \
   pixman \
   pygobject2-devel \
-  pyqt4-common \
   qt4 \
   qwt5 \
   sip \
@@ -33,11 +32,11 @@ RUN pacman -S --noconfirm \
   xcb-proto \
   xdg-utils \
   xorg-xset \
-  xorgproto 
-#&& pacman -Scc --noconfirm
+  xorgproto \
+  && pacman -Scc --noconfirm
 
 # Install basic libs and packages to support python2
-RUN pacman -S --noconfirm \
+RUN pacman -S  --needed --noconfirm \
   libdrm \
   libedit \
   libelf \
@@ -62,7 +61,7 @@ RUN pacman -S --noconfirm \
 
 
 # Install python2 core and modules, other package and libs will also be installed
-RUN pacman -S --noconfirm python-dbus-common \
+RUN pacman -S  --needed --noconfirm python-dbus-common \
   python2 \
   python2-cairo \
   python2-cheetah \
@@ -73,14 +72,13 @@ RUN pacman -S --noconfirm python-dbus-common \
   python2-numarray \
   python2-numpy \
   python2-opengl \
-  python2-pyqt4 \
-  python2-pyqwt \
   python2-requests \
   python2-sip && pacman -Scc --noconfirm
 
-RUN pacman --noconfirm -S gnuradio \
+RUN pacman  --needed --noconfirm -S gnuradio \
 	gnuradio-companion \
 	gnuradio-osmosdr \
+	terminator \
 	&& pacman -Scc --noconfirm
 
 # Enables the graphical interface of gnuradio-companion inside the container
